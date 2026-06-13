@@ -1,0 +1,152 @@
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+using namespace std;
+
+struct shahriye{
+	int id;
+	string name;
+	int fcost;
+	int ncost;
+	bool status;
+}d[100];
+FILE *fp;
+
+void listjadid(){
+	fp = fopen("file.txt","w");
+	fclose(fp);
+	printf("File jadid.\n");
+}
+
+void gereftan(int i){
+	cout<<"Nam Daneshjoo: \n";
+	cin>>d[i].name;
+	cout<<"Shoamre Daneshjooei: \n";
+	cin>>d[i].id;
+	cout<<"Mablaghe Shahriye: \n";
+	cin>>d[i].fcost;
+	cout<<"Mablagh Pardakht shode: \n";
+	cin>>d[i].ncost;
+	fp = fopen("file.txt","a");
+	if(d[i].fcost == d[i].ncost){
+		fprintf(fp,"%s, %d, %s, %s, Kamel \n",d[i].name.c_str(),d[i].id,d[i].fcost,d[i].ncost,d[i].status);
+	}else{
+		fprintf(fp,"%s, %d, %s, %s, Naghes \n",d[i].name.c_str(),d[i].id,d[i].fcost,d[i].ncost,d[i].status);
+}
+		fclose(fp);
+	printf("File Sabt va Berooz Shod.\n");
+}
+
+void list(){
+	char mystring[50];
+	fp = fopen("file.txt","r");
+	system("cls");
+	int f = 0;
+	puts("................\n");
+	while(!feof(fp)){
+		if(fgets(mystring,50,fp)!=NULL){
+			f = 1;
+			puts(mystring);
+		}
+	}
+	if(!f)
+	puts("file khali ast.");
+	puts("................\n");
+	fclose(fp);
+
+}
+
+void jostojoo(){
+	char mystring[50],temp[50],*ch;
+	cout<<"lotfan Nam ya Shomare Daneshjooei ra Vared Konid: \n";
+	cin>>temp;
+	fp = fopen("file.txt","r");
+	system("cls");
+	int f = 0;
+	puts("................\n");
+	while(!feof(fp)){
+		if(fgets(mystring,50,fp)!=NULL){
+			ch =strstr(mystring,temp);
+			if(ch){
+				f = 1;
+		       	puts(mystring);		
+			}
+
+		}
+	}
+	if(!f)
+	puts("chizi ba in Moshakhasat Peyda Nashod!!!.");
+	puts("................\n");
+	fclose(fp);
+}
+
+void list_bedehkar(){
+	char mystring[100],temp[] = "Naghes";
+	char *ch;
+	fp = fopen("file.txt", "r");
+	if(fp == NULL){
+		cout << "File vojood nadard!\n";
+		return;
+	}
+	system("cls");
+	int f = 0;
+	puts("List Daneshjooyane Bedehkaar");
+	puts("................\n");
+	while(fgets(mystring,100,fp)!=NULL){
+		ch = strstr(mystring,temp);
+		if(ch){
+			f = 1;
+			puts(mystring);
+		}
+	}
+	if(!f)
+		puts("hich Bedehkari peyda nashod.");
+	puts("\n................\n");
+	fclose(fp);
+}
+
+
+int main(){
+	int c,i;
+	bool on = true;
+	while(on){
+		cout<<"  ..:be Samane Modiriyate Pardakhte Shahriye Daneshjooei Khosh Amadid::.."<<endl;
+		cout<<"\nlotfan yek adad beyne 0 ta 5 ra Vared konid: \n";
+		cout<<"0 - List Kamel DaneshjooYan.\n";
+		cout<<"1 - Sabt Pardakhte Jadid.\n";
+		cout<<"2 - Jostejoo: (bar asas Nam ya ID daneshjooei.)\n";
+		cout<<"3 - Namayeshe DaneshjooYane Bedehkaar.\n";
+		cout<<"4 - eejad list Jadid.(list mojood pak mishavad)\n";
+		cout<<"5 - Khorooj az Barname.\n";
+		cin>>c;
+		cin.clear();
+		while(cin.get()!='\n'){
+			c = 6;
+		}
+		switch(c){
+			case 0:
+				list();
+				break;
+			case 1:
+				gereftan(i++);
+				break;	
+			case 2:
+				jostojoo();
+				break;
+			case 3:
+				list_bedehkar();
+				break;
+			case 4:
+				listjadid();
+				break;	
+			case 5:
+				on = false;
+				break;	
+				default:
+				cout<<"Khata!\n";					
+		}
+		
+	}
+	return 0;
+}
